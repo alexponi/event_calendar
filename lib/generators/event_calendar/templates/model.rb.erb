@@ -1,3 +1,29 @@
 class <%= model_class_name %> < ActiveRecord::Base
   has_event_calendar
+
+  after_save :regular_events
+
+  def regular_events   
+    a = case period
+        when "day" then :days
+        when "week" then :weeks
+        when "month" then :months
+        when "year" then :years     
+        else 0
+        end
+    if a != 0 
+      i = 1
+      while start_at.advance(a => i) <= end_period do
+        eventd = Event.new(:name => name, 
+                           :start_at => start_at.advance(a => i), 
+                           :end_at => end_at.advance(a => i), 
+                           :period_id => id,
+                           :color => color,
+                           :end_period => end_period)
+        eventd.save!
+        i +=1
+      end
+    end  
+  end
 end
+

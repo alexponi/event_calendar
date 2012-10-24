@@ -13,7 +13,7 @@ class EventCalendarGenerator < Rails::Generators::Base
     class_option :"use_#{k}",   :type => :boolean, :default => false, :desc => "Use #{v} for scripting"  
   end
   class_option :use_all_day,  :type => :boolean, :default => false, :desc => "Add an additional 'all_day' attribute"
-  class_option :use_color,    :type => :boolean, :default => false, :desc => "Add an additional 'color' attribute"
+  class_option :use_color,    :type => :boolean, :default => true, :desc => "Add an additional 'color' attribute"
   
   def do_it
     say "Adding an all_day column", :yellow if options[:use_all_day]
